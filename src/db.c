@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 struct sqlite3 *create_db_connection() {
-  const char *user_dir = getpwuid(getuid())->pw_dir; // TODO: error logic
+  const char *user_dir = getpwuid(getuid())->pw_dir; // TODO: error handling
   const char *sqlite_file_path = "/Library/Messages/data.db";
 
   char db_file_path[strlen(user_dir) + strlen(sqlite_file_path) + 1];
@@ -12,8 +12,10 @@ struct sqlite3 *create_db_connection() {
   strncat(db_file_path, sqlite_file_path, strlen(sqlite_file_path));
 
   struct sqlite3 *db;
-  sqlite3_open(db_file_path, &db);
+  sqlite3_open(db_file_path, &db); // TODO: error handling
   return db;
 }
+
+int close_db_connection(struct sqlite3 *db) { return sqlite3_close(db); }
 
 int main() {};
