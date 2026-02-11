@@ -12,11 +12,13 @@ time_t convert_epoch_unix_to_mac(time_t unix_time) {
 };
 
 time_t convert_calendar_date_to_unix_epoch(char date[]) {
+  // TODO: error handling
   struct tm tm = {0};
   strptime(date, CALENDAR_DATE_FORMAT, &tm);
   return timegm(&tm);
 };
 
 time_t convert_calendar_date_to_mac_epoch(char date[]) {
+  // TODO: re-implement logic to convert to mac epoch directly
   return convert_epoch_unix_to_mac(convert_calendar_date_to_unix_epoch(date));
 };
